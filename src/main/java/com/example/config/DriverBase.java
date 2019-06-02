@@ -16,7 +16,7 @@ public class DriverBase {
 
 	public WebDriver driver;
 	private static final String BROWSER = System.getProperty("selenium.browser", "chrome");
-	private static final String REMOTE = System.getProperty("selenium.remote", "true");
+	private static final String REMOTE = System.getProperty("selenium.remote", "false"); // тут поставить true для удаленного запуска
 	private static ThreadLocal<WebDriver> driverThread = new ThreadLocal<>();
 
 	public WebDriver getDriver() {
@@ -24,7 +24,7 @@ public class DriverBase {
 			switch (BROWSER) {
 				case "chrome":
 					System.setProperty("webdriver.chrome.driver",
-						"./src/main/resources/drivers/chromedriver-mac-64bit");
+						"./src/main/resources/drivers/chromedriver.exe");
 					if (Boolean.valueOf(REMOTE)) {
 						driver = initRemoteDriver(DesiredCapabilities.chrome());
 					} else {
