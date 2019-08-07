@@ -8,6 +8,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public class DriverBase {
 	public static DriverBase get() {
@@ -24,12 +25,16 @@ public class DriverBase {
 			switch (BROWSER) {
 				case "chrome":
 					System.setProperty("webdriver.chrome.driver",
-						"./src/main/resources/drivers/chromedriver.exe");
+						"./src/test/resources/chromedriver.exe");
 					if (Boolean.valueOf(REMOTE)) {
 						driver = initRemoteDriver(DesiredCapabilities.chrome());
 					} else {
 						driver = new ChromeDriver();
 					}
+					driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+					driver.manage().timeouts().pageLoadTimeout(50, TimeUnit.SECONDS);
+					driver.manage().timeouts().setScriptTimeout(50, TimeUnit.SECONDS);
+					driver.manage().window().maximize();
 					driverThread.set(driver);
 					break;
 

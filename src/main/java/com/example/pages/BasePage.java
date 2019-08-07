@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableComponent<T>  {
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private static final String BASE_URL = "https://sqa-days-example.herokuapp.com";
+	private static final String BASE_URL = "http://rtd-testy-app:38080/hazelcast-mancenter/admin/console";
 
 	public BasePage() {
 		this.driver = DriverBase.get().getDriver();
@@ -50,6 +50,10 @@ public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableC
 		element.sendKeys(text);
 	}
 
+	public void clear(WebElement element) {
+		wait.until(ExpectedConditions.visibilityOf(element)).clear();
+	}
+
 	public void click(WebElement element) {
 		wait.until(ExpectedConditions.visibilityOf(element)).click();
 	}
@@ -62,5 +66,9 @@ public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableC
 	@Override
 	protected void isLoaded() throws Error {
 
+	}
+
+	public void waitUntilLoaded(WebElement element) {
+		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 }
