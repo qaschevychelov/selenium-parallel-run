@@ -31,9 +31,9 @@ public class DriverBase {
 					} else {
 						driver = new ChromeDriver();
 					}
-					driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
-					driver.manage().timeouts().pageLoadTimeout(50, TimeUnit.SECONDS);
-					driver.manage().timeouts().setScriptTimeout(50, TimeUnit.SECONDS);
+					driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+					driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+					driver.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
 					driver.manage().window().maximize();
 					driverThread.set(driver);
 					break;

@@ -39,6 +39,9 @@ public class HazelCastPage extends BasePage {
     @FindBy(xpath = "//a[@title='Logout']")
     private WebElement logOutBtn;
 
+    @FindBy(xpath = "//button[@class='rt-pagination-button' and .='\uF105']")
+    private WebElement arrowRightBtn;
+
     @Override
     public String getPageUrl() {
         return null;
@@ -58,6 +61,10 @@ public class HazelCastPage extends BasePage {
 
     public void clickMaps() {
         click(sideBarMaps);
+        for (int i = 0; i < 10; i++) {
+            if (isElementDisplayed(searchMapField)) break;
+            click(sideBarMaps);
+        }
         waitUntilLoaded(searchMapField);
     }
 
@@ -67,7 +74,16 @@ public class HazelCastPage extends BasePage {
     }
 
     public List<String> getAllMaps() {
-        return maps.stream().map(WebElement::getText).collect(Collectors.toList());
+        List<String> maps = this.maps.stream().map(WebElement::getText).collect(Collectors.toList());
+        if (isArrowRightVisible()) {
+            int i = 0;
+            while (isArrowRightBtnEnabled() && i != 20) {
+                clickArrowRightBtn();
+                maps.addAll(this.maps.stream().map(WebElement::getText).collect(Collectors.toList()));
+                i++;
+            }
+        }
+        return maps;
     }
 
     public void clickConsole() {
@@ -88,5 +104,18 @@ public class HazelCastPage extends BasePage {
     public void logOut() {
         click(logOutBtn);
         waitUntilLoaded(userName);
+    }
+
+    public boolean isArrowRightVisible() {
+        return isElementDisplayed(arrowRightBtn);
+    }
+
+    public void clickArrowRightBtn() {
+        click(arrowRightBtn);
+        waitUntilLoaded(searchMapField);
+    }
+
+    public boolean isArrowRightBtnEnabled() {
+        return arrowRightBtn.isEnabled();
     }
 }
