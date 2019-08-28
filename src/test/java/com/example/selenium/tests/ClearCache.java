@@ -25,7 +25,9 @@ public class ClearCache extends SeleniumBase {
 
             maps.forEach(one -> {
                 hazelCastPage.typeConsole("ns " + one);
+                hazelCastPage.waitUntilNameSpaceChanged(one);
                 hazelCastPage.typeConsole("m.clear");
+                hazelCastPage.waitUntilNameSpaceCleared(one);
             });
             hazelCastPage.logOut();
         } catch (Throwable e) {

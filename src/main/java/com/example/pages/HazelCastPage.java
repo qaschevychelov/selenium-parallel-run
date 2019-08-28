@@ -118,4 +118,30 @@ public class HazelCastPage extends BasePage {
     public boolean isArrowRightBtnEnabled() {
         return arrowRightBtn.isEnabled();
     }
+
+    public void waitUntilNameSpaceChanged(String namespace) {
+        for (int i = 0; i < 10; i++) {
+            if (consoleTextArea.getAttribute("value").endsWith("namespace: " + namespace + "\n")) break;
+            else {
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void waitUntilNameSpaceCleared(String namespace) {
+        for (int i = 0; i < 10; i++) {
+            if (consoleTextArea.getAttribute("value").endsWith(namespace + "> Cleared all.\n")) break;
+            else {
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
